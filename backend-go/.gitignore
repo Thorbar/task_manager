@@ -1,0 +1,25 @@
+# Build & cache
+/bin
+*.exe
+*.out
+*.test
+
+# Dependency dirs
+vendor/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.development
+.env.production
+
+# Logs
+*.log

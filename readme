@@ -1,0 +1,98 @@
+# 🧠 Task Manager
+
+Full-stack task management app built with SvelteKit (frontend) and Go (backend). Inspired by professional architectures.
+
+---
+
+## 📁 Project structure
+
+---
+task-manager/
+│
+├── backend-go/ # Go backend with REST API, JWT auth, MySQL integration
+├── frontend-svelte/ # SvelteKit frontend with TailwindCSS and i18n
+├── .gitignore # Git ignore rules for backend and frontend
+├── README.md # This documentation
+└── queries # Useful SQL queries for development (optional)
+
+
+## ⚙️ Backend Setup
+
+```bash
+cd backend-go
+
+# Init Go project (only first time)
+go mod init taskmanager
+
+# Install dependencies
+go get -u github.com/go-sql-driver/mysql
+go get golang.org/x/crypto/bcrypt
+go get github.com/golang-jwt/jwt/v5
+go get github.com/joho/godotenv
+go get github.com/rs/cors
+go get github.com/stretchr/testify@latest
+go get modernc.org/sqlite
+
+# Clean & update modules
+go mod tidy
+go clean -cache
+# Run with default environment
+go run ./cmd
+
+# Run using a specific environment (e.g. development)
+APP_ENV=development go run ./cmd
+#Run testing
+go test ./internal/user
+
+```
+
+---
+
+## 🌐 Frontend Setup
+```bash
+cd frontend-svelte
+
+# Create new Svelte app (only once)
+npx sv create frontend-svelte
+
+# Install dependencies
+npm install
+npm install svelte-i18n
+
+# Tailwind setup
+npm install -D tailwindcss postcss autoprefixer
+npm install tailwindcss @tailwindcss/vite
+
+# run frontend
+npm run dev
+
+```
+
+## Dependencies & requirements
+
+Go (version 1.21 or higher recommended)
+Node.js (v18 or later recommended)
+MySQL (or compatible database server)
+npm (comes with Node.js)
+
+---
+
+## Useful Links
+
+Go Official Documentation
+SvelteKit Docs
+Tailwind CSS
+JWT Go Library
+svelte-i18n
+
+## 🚀run full project
+
+```bash
+# Backend
+go run ./cmd
+
+# Frontend
+npm run dev
+```
+
+

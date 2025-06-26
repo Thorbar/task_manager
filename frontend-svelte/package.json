@@ -1,0 +1,39 @@
+{
+	"name": "frontend-svelte",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"tailwind": "tailwindcss -i ./src/app.css -o ./static/output.css --watch"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^6.0.1",
+		"@sveltejs/kit": "^2.16.0",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@tailwindcss/forms": "^0.5.9",
+		"@tailwindcss/postcss": "^4.1.10",
+		"@tailwindcss/vite": "^4.1.10",
+		"autoprefixer": "^10.4.21",
+		"postcss": "^8.5.6",
+		"svelte": "^5.0.0",
+		"svelte-check": "^4.0.0",
+		"tailwindcss": "^3.4.17",
+		"typescript": "^5.8.3",
+		"vite": "^6.2.6"
+	},
+	"description": "Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).",
+	"main": "svelte.config.js",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"svelte-i18n": "^4.0.1",
+		"tailwind-variants": "^1.0.0"
+	}
+}

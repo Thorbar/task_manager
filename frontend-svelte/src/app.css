@@ -1,0 +1,17 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss";
+@import "tailwindcss/utilities";
+
+@keyframes dots {
+  0%   { content: ''; }
+  33%  { content: '.'; }
+  66%  { content: '..'; }
+  100% { content: '...'; }
+}
+
+.loading-dots .dots::after {
+  content: '...'; /* ← dot space for loading */
+  animation: dots 1.5s steps(3, end) infinite;
+  visibility: visible;
+  white-space: pre;
+}
