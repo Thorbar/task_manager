@@ -9,8 +9,8 @@ register('en', () => import('./en.json'));
 register('ja', () => import('./ja.json'));
 
 init({
-  fallbackLocale: 'en',
-  initialLocale: browser ? localStorage.getItem('lang') || getLocaleFromNavigator() : 'en'
+  fallbackLocale: 'es',
+  initialLocale: browser ? localStorage.getItem('lang') || getLocaleFromNavigator() : 'es'
 });
 
 if (browser) {

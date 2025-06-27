@@ -1,6 +1,9 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss";
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+
 
 @keyframes dots {
   0%   { content: ''; }

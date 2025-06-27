@@ -10,8 +10,8 @@
     - Renders a cookie consent banner to comply with privacy regulations.
     This layout is applied globally, providing consistent UI elements across pages.   
   -->
-<header class="bg-slate-500 shadow-md py-4 px-8 w-320">
-  <div class="max-w-7xl mx-auto flex justify-center">
+<header class="bg-slate-500 shadow-md ">
+  <div class="max-w-1xl flex justify-center">
     <LanguageSelector />
   </div>
 </header>

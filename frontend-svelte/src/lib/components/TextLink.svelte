@@ -3,7 +3,7 @@
 </script>
 
 <div
-  class={`text-sm text-gray-600 underline hover:text-blue-500 transition duration-200 transform hover:scale-110 ${href}`}
+  class={`text-sm font-bold text-gray-600 underline hover:text-blue-500 transition duration-200 transform hover:scale-110 ${href}`}
 >
   <slot />
 </div>

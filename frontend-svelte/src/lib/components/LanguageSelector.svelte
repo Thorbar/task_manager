@@ -20,7 +20,7 @@
   const goHome = () => goto('/');
 </script>
 
-<div class="flex items-center space-x-2 my-4 relative">
+<div class="flex items-center space-x-2  ">
   <button
     on:click={goHome}
     aria-label="Ir al menú principal"
@@ -35,7 +35,7 @@
   <!-- Dropdown personalizado -->
   <div class="relative">
     <button
-      class="flex items-center space-x-2 border border-gray-300 rounded-md p-1 px-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+      class="flex items-center space-x-2   rounded-md p-1 px-3 focus:outline-none focus:ring-2 focus:ring-white"
       aria-haspopup="listbox"
       aria-expanded={isOpen}
       on:click={() => (isOpen = !isOpen)}
@@ -67,7 +67,7 @@
           role="option"
           tabindex="0"
           aria-selected={loc.code === $locale}
-          class="cursor-pointer flex items-center space-x-2 p-2 hover:bg-green-100"
+          class="cursor-pointer flex items-center space-x-2 p-2 hover:bg-white-100"
           on:click={() => selectLocale(loc.code)}
           on:keydown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {

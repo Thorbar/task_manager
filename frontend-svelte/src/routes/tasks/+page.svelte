@@ -4,13 +4,15 @@
   import ButtonTasks from '$lib/components/ButtonTasks.svelte';
   import { PUBLIC_API_URL, PUBLIC_API_PORT } from '$env/static/public';
   import { t } from 'svelte-i18n';
+  import { get } from 'svelte/store';
   import type { Task, User } from '$lib/types';
+  import { tasks } from '$lib/stores/tasks'; // Usa esta store centralizada
   import { fetchWithAuth } from '$lib/utils/fetchWithAuth';
   import { goto } from '$app/navigation';
 
+
   // Stores to manage tab, tasks list, and user data
   const tab = writable<'tasks' | 'profile'>('tasks');
-  const tasks = writable<Task[]>([]);
   const userData = writable<User | null>(null);
 
   const baseUrl = `${PUBLIC_API_URL}:${PUBLIC_API_PORT}`;
@@ -72,7 +74,8 @@
     });
     if (res.ok) {
       const newTask = await res.json();
-      tasks.update(t => [...t, newTask]);
+      const currentTasks = get(tasks) ?? [];
+      tasks.set([...currentTasks, newTask]);
       newTitle = '';
       newDescription = '';
     } else {
@@ -159,12 +162,12 @@
   };
 </script>
 
-<div class="flex flex-col items-center mt-32 text-xl font-semibold mb-6 uppercase text-green-600 drop-shadow-lg">
-  <h1>{$tab === 'tasks' ? $t('task') : $t('user')}</h1>
-</div>
 
-<div class="w-full px-4 mt-10 shadow-lg">
 
+<section class="flex flex-col items-center">
+  <h2 class="text-3xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg mb-10">
+    {$tab === 'tasks' ? $t('task') : $t('user')}
+  </h2>
   <!-- Navigation buttons -->
   <div class="flex gap-4 mb-4">
     <div class="w-14">
@@ -211,12 +214,12 @@
         {#if $tab === 'tasks'}
           {#each $tasks as task}
             <tr class="bg-yellow-100 text-black border-b hover:bg-yellow-200">
-              <td class="px-4 py-2 border"><input class="w-full text-center" bind:value={task.title} /></td>
-              <td class="px-4 py-2"><input class="w-full text-center" bind:value={task.description} /></td>
+              <td class="px-4 py-2 border"><input class="bg-transparent w-full text-center" bind:value={task.title} /></td>
+              <td class="px-4 py-2"><input class="bg-transparent w-full text-center" bind:value={task.description} /></td>
               <td class="px-4 py-2 border text-gray-600">{task.username}</td>
               <td class="px-4 py-2 border">{new Date(task.created_at).toLocaleDateString()}</td>
               <td class="px-4 py-2 border font-semibold {task.status === 'completed' ? 'text-green-600' : 'text-red-600'}">
-                <select bind:value={task.status}>
+                <select bind:value={task.status} class ="bg-transparent">
                   <option class="text-red-600" value="pending">{$t('taskPending')}</option>
                   <option class="text-green-600" value="completed">{$t('taskCompleted')}</option>
                 </select>
@@ -234,8 +237,8 @@
 
           <!-- New task input row -->
           <tr class="bg-cyan-100 text-black border-b hover:bg-yellow-200">
-            <td><input bind:value={newTitle} placeholder={$t('title')} class="w-full p-1 border" /></td>
-            <td><input bind:value={newDescription} placeholder={$t('description')} class="w-full p-1 border" /></td>
+            <td><input bind:value={newTitle} placeholder={$t('title')} class="bg-transparent text-center " /></td>
+            <td><input bind:value={newDescription} placeholder={$t('description')} class="bg-transparent text-center " /></td>
             <td class="px-4 py-2 border text-gray-600">{editUsername}</td>
             <td class="px-4 py-2 border"></td>
             <td class="px-4 py-2 border">{$t('taskPending')}</td>
@@ -250,10 +253,10 @@
           <tr class="bg-yellow-100 text-black border-b hover:bg-yellow-200">
             <td class="px-4 py-2 border">{editUsername}</td>
             <td class="px-4 py-2 border">
-              <input type="text" bind:value={editName} placeholder={$t('name')} />
+              <input type="text" bind:value={editName} placeholder={$t('name')} class = "bg-transparent"/>
             </td>
             <td class="px-4 py-2 border">
-              <input type="text" bind:value={editSurname} placeholder={$t('surname')} />
+              <input type="text" bind:value={editSurname} placeholder={$t('surname')} class = "bg-transparent" />
             </td>
             <td class="px-4 py-2 border">{editEmail}</td>
             <td class="px-4 py-2 border">{new Date($userData.created_at).toLocaleDateString()}</td>
@@ -267,4 +270,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</section>

@@ -62,5 +62,8 @@
   "errorFetchingTasks": "Error en obtenir les tasques",
   "notLoggedIn": "Usuari no autenticat",
   "invalidToken": "Token invàlid o sessió expirada",
-  "networkError": "Error de xarxa o inesperat"
+  "networkError": "Error de xarxa o inesperat",
+  "wrongData": "Nom d'usuari o contrasenya incorrectes",
+  "taskUpdated": "Tasca actualitzada"
+
 }

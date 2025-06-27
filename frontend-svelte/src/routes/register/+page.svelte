@@ -105,10 +105,21 @@
       });
 
       if (!res.ok) {
-        showErrorMessage($t('registerFailed'));
+        const errorData = await res.json();
+
+        if (res.status === 409 && errorData?.error?.includes('exists')) {
+          showErrorMessage($t('userAlreadyExists'));
+        } else if (res.status === 400 && errorData?.error?.includes('password')) {
+          showErrorMessage($t('wrongPassword'));
+        } else {
+          console.log('4');
+          showErrorMessage($t('registeroFailed'));
+        }
+
         loading = false;
         return;
       }
+
 
       // Simulate spinner wait time for better UX
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -127,55 +138,53 @@
   };
 </script>
 
-<div class="flex flex-col items-center mt-32">
-  <div class="text-xl font-semibold mb-6 uppercase text-green-600 drop-shadow-lg">
-    <h2>{$t('register')}</h2>
-  </div>
+<section class="flex flex-col items-center">
+    <h2 class="text-3xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg mb-10">{$t('register')}</h2>
 
-  <form on:submit|preventDefault={registerUser}>
-    <div class="w-55 font-bold">
-      <label for="name" class="block text-sm mb-1">{$t('name')}</label>
+  <form on:submit|preventDefault={registerUser} class="space-y-3 w-full flex flex-col items-center">
+    <div class="font-bold">
+      <label for="name" >{$t('name')}</label>
       <InputWrapper>
         <input id="name" bind:value={name} type="text" required class="w-full" />
       </InputWrapper>
     </div>
 
-    <div class="h-20 w-55 font-bold">
-      <label for="surname" class="block text-sm mb-1">{$t('surname')}</label>
+    <div class="font-bold">
+      <label for="surname" >{$t('surname')}</label>
       <InputWrapper>
         <input id="surname" bind:value={surname} type="text" required class="w-full" />
       </InputWrapper>
     </div>
 
-    <div class="w-55 font-bold">
-      <label for="email" class="block text-sm mb-1">{$t('email')}</label>
+    <div class="font-bold">
+      <label for="email" >{$t('email')}</label>
       <InputWrapper>
         <input id="email" bind:value={email} type="email" required class="w-full" />
       </InputWrapper>
     </div>
 
     <div class="w-55 font-bold">
-      <label for="username" class="block text-sm mb-1">{$t('username')}</label>
+      <label for="username">{$t('username')}</label>
       <InputWrapper>
         <input id="username" bind:value={username} type="text" required class="w-full" />
       </InputWrapper>
     </div>
 
     <div class="w-55 font-bold">
-      <label for="password" class="block text-sm mb-1">{$t('password')}</label>
+      <label for="password">{$t('password')}</label>
       <InputWrapper>
         <input id="password" bind:value={password} type="password" required class="w-full" />
       </InputWrapper>
     </div>
 
     <div class="h-15 w-55 font-bold">
-      <label for="confirmPassword" class="block text-sm mb-1">{$t('confirmPassword')}</label>
+      <label for="confirmPassword">{$t('confirmPassword')}</label>
       <InputWrapper>
         <input id="confirmPassword" bind:value={confirmPassword} type="password" required class="w-full" />
       </InputWrapper>
     </div>
 
-    <div class="flex justify-between text-center">
+    <div class="flex justify-between items-center space-x-4">
       <ButtonLoadSpinner type="submit" loading={loading}>{$t('register')}</ButtonLoadSpinner>
       <TextLink><a href="/login">{$t('back')}</a></TextLink>
     </div>
@@ -196,4 +205,4 @@
       {errorMsg}
     </div>
   {/if}
-</div>
+</section>

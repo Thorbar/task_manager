@@ -62,5 +62,8 @@
   "errorFetchingTasks": "タスクの取得中にエラーが発生しました",
   "notLoggedIn": "ユーザーが認証されていません",
   "invalidToken": "無効なトークンまたはセッションの有効期限切れ",
-  "networkError": "ネットワークエラーまたは予期しないエラー"
+  "networkError": "ネットワークエラーまたは予期しないエラー",
+  "wrongData": "ユーザー名またはパスワードが間違っています",
+  "taskUpdated": "タスクが更新されました"
+
 }

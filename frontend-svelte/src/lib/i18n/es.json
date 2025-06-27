@@ -62,5 +62,8 @@
   "errorFetchingTasks": "Error al obtener las tareas",
   "notLoggedIn": "Usuario no autenticado",
   "invalidToken": "Token inválido o sesión expirada",
-  "networkError": "Error de red o inesperado"
+  "networkError": "Error de red o inesperado",
+  "wrongData": "Usuario o contraseña erroneos",
+  "taskUpdated": "Tarea actualizada"
+  
 }

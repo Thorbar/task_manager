@@ -39,7 +39,7 @@
       if (!res.ok) {
         // Extract backend error message text
         const err = await res.text();
-        errorMsg = err;
+        errorMsg = $t('wrongData');;
         loading = false;
         return;
       }
@@ -71,35 +71,32 @@
   }
 </script>
 
-<div class="flex flex-col items-center mt-32">
-  <div class="text-xl font-semibold mb-6 uppercase text-green-600 drop-shadow-lg">
-    <h2>{$t('login')}</h2>
-  </div>
+<section class="flex flex-col items-center ">
+      <h2 class="text-3xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg mb-10">
+      {$t('login')}
+    </h2>
 
   <form on:submit|preventDefault={login} class="space-y-5 w-full flex flex-col items-center">
-    <div class="w-55">
+    <div >
       <label for="username" class="block font-bold text-sm mb-1">{$t('username')}</label>
       <InputWrapper>
-        <input id="username" bind:value={username} type="text" placeholder={$t('insertUser')} required class="w-full"/>
+        <input id="username" bind:value={username} type="text" placeholder={$t('insertUser')} required />
       </InputWrapper>
     </div>
 
-    <div class="w-55">
+    <div >
       <label for="password" class="block font-bold text-sm mb-1">{$t('password')}</label>
       <InputWrapper>
-        <input id="password" bind:value={password} type="password" placeholder={$t('insertPassword')} required class="w-full"/>
+        <input id="password" bind:value={password} type="password" placeholder={$t('insertPassword')} required />
       </InputWrapper>
     </div>
 
     <TextLink><a href="/resetPassword">{$t('resetPassword')}</a></TextLink>
 
-    <div class="h-15 flex justify-between items-center w-55 text-center">
+    <div class="flex justify-between items-center space-x-4">
       <ButtonLoadSpinner type="submit" loading={loading}>{$t('login')}</ButtonLoadSpinner>
-      <TextLink><a href="/">{ $t('main') }</a></TextLink>
-    </div>
-
-    <div class="flex justify-between items-center w-55 text-center">
       <Button on:click={register}>{$t('register')}</Button>
+      <TextLink><a href="/">{ $t('main') }</a></TextLink>
     </div>
   </form>
 
@@ -110,6 +107,6 @@
   {/if}
 
   {#if loading}
-    <Spinner />
+      <Spinner />
   {/if}
-</div>
+</section >

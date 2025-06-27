@@ -96,8 +96,8 @@
   }
 </script>
 
-<div class="flex flex-col items-center mt-32">
-  <h2 class="text-xl font-semibold mb-6 uppercase text-green-600 drop-shadow-lg">{$t('restablishPwd')}</h2>
+<section class="flex flex-col items-center ">
+  <h2 class="text-3xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg mb-10">{$t('restablishPwd')}</h2>
 
   <form on:submit|preventDefault={resetPassword} class="w-55">
     <label for="password" class="block font-bold text-sm mb-1">{$t('newPwd')}</label>
@@ -144,4 +144,4 @@
       {successMsg}
     </div>
   {/if}
-</div>
+</section>

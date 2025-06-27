@@ -16,13 +16,10 @@
     The goLogin function handles the button click by navigating programmatically to /login.   
 -->
 
-<div class="w-full flex flex-col justify-center items-center text-center">
-  <div class="text-5xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg">
-    <h1>{$t('welcome')}</h1>
-  </div>  
-  <div class="h-15 flex items-center ">
+<section class="w-full flex flex-col justify-center items-center text-center">
+  <h1 class="text-4xl sm:text-5xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg mb-8">
+    {$t('welcome')}
+  </h1> 
     <Button on:click={goLogin}>{$t('login')}</Button>
-  </div>
-</div>
-
+</section>
 

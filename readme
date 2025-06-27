@@ -93,4 +93,46 @@ svelte-i18n
 
 ```
 
+## 🐳 Docker Setup (optional)
 
+```bash
+
+# Build both images (backend and frontend)
+docker-compose build
+
+# Run the containers
+docker-compose up
+```
+
+## 📁 Docker Files Structure
+
+task-manager/
+│
+├── docker-compose.yml
+├── .env               # Environment variables for backend (DB config)
+├── backend-go/
+│   └── Dockerfile     # Builds Go server
+├── frontend-svelte/
+│   └── Dockerfile     # Builds SvelteKit app
+
+## 🔧 Environment Variables
+
+MYSQL_HOST=db
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=yourpassword
+MYSQL_DATABASE=taskmanager
+
+APP_PORT=8080
+APP_ENV=development
+JWT_SECRET=your-secret-key
+
+☝️ Docker will automatically load this .env file via docker-compose.
+
+## 🚀 Run Full Project 
+
+```bash
+#Using Git Bash
+./start.sh
+
+```

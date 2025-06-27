@@ -62,5 +62,9 @@
   "errorFetchingTasks": "Error fetching tasks",
   "notLoggedIn": "User not authenticated",
   "invalidToken": "Invalid token or session expired",
-  "networkError": "Network or unexpected error"
+  "networkError": "Network or unexpected error",
+  "wrongData": "Incorrect username or password",
+  "taskUpdated": "Task updated"
+
+
 }

@@ -77,30 +77,35 @@
   }
 </script>
 
-<div class="flex flex-col items-center mt-32">
-  <h2 class="text-xl font-semibold mb-6 uppercase text-green-600 drop-shadow-lg">{$t('pwdRecovery')}</h2>
+<section class="flex flex-col items-center">
+  <form on:submit|preventDefault={handleConfirm} class="space-y-3 w-full flex flex-col items-center">
 
-  <div class="h-14 w-55">
-    <label for="email" class="block text-sm font-bold mb-1">{$t('email')}</label>
-    <InputWrapper>
-      <input id="email" type="email" bind:value={email} required class="w-full" />
-    </InputWrapper>
-  </div>
+    <h2 class="text-3xl font-extrabold uppercase tracking-wide text-green-600 drop-shadow-lg mb-10">{$t('pwdRecovery')}</h2>
 
-  {#if showError}
-    <p class="text-red-600 font-bold text-sm mt-2">{errorMsg}</p>
-  {/if}
+    <div class="">
+      <label for="email" class="block text-sm font-bold mb-1">{$t('email')}</label>
+      <InputWrapper>
+        <input id="email" type="email" bind:value={email}  required class="w-full" />
+      </InputWrapper>
+    </div>
 
-  {#if showSuccess}
-    <p class="text-green-600 font-bold text-sm mt-2">{successMsg}</p>
-  {/if}
 
-  <div class="flex justify-between items-center gap-5 w-55 mt-5 text-center">
-    <Button on:click={handleConfirm}>{$t('confirm')}</Button>
-    <Button on:click={handleCancel} variant="secondary">{$t('cancel')}</Button>
-  </div>
+    <div class="flex justify-between items-center gap-5 w-55 mt-5 text-center">
+      <Button on:click={handleConfirm}>{$t('confirm')}</Button>
+      <Button on:click={handleCancel} variant="secondary">{$t('cancel')}</Button>
+    </div>
 
-  {#if loading}
-    <Spinner />
-  {/if}
-</div>
+
+  </form>
+    {#if loading}
+      <Spinner />
+    {/if}
+    {#if showError}
+      <p class="bg-red-600 text-white text-center font-bold text-sm whitespace-pre-line px-4 py-2 rounded shadow-lg z-50 transition-opacity duration-300">{errorMsg}</p>
+    {/if}
+
+    {#if showSuccess}
+      <p class="bg-green-600 text-black text-center font-bold text-sm whitespace-pre-line px-4 py-2 rounded shadow-lg z-50 transition-opacity duration-300">{successMsg}</p>
+    {/if}
+</section>
+

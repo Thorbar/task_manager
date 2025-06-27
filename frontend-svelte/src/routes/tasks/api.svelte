@@ -1,10 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { tasks, errorMsg } from '$lib/stores/tasks';
   import { t } from 'svelte-i18n';
-
-  export const tasks = writable([]);
-  export const errorMsg = writable('');
 
   /**
    * On component mount, fetch the tasks of the authenticated user.
