@@ -88,11 +88,9 @@ svelte-i18n
 ## 🚀run full project
 
 ```bash
-# Backend
-go run ./cmd
+#Using Git Bash
+./start.sh
 
-# Frontend
-npm run dev
 ```
 
 
