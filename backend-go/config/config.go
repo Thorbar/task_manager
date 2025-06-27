@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-	"task-manager/backend-go/internal/i18n"
 
 	"github.com/joho/godotenv"
 )
@@ -18,8 +17,7 @@ type Config struct {
 	Port       string
 	JWTSecret  string
 }
-
-// Load reads environment variables and returns a Config instance
+/* NEED TO BE OPTIMIZED
 func Load() (*Config, error) {
 	env := os.Getenv("APP_ENV")
 	if env == "" {
@@ -42,7 +40,25 @@ func Load() (*Config, error) {
 		Port:       getPort(),
 	}, nil
 }
+*/
+// Load reads environment variables and returns a Config instance
+func Load() (*Config, error) {
+	if err := godotenv.Load(".env"); err != nil {
+		return nil, fmt.Errorf("no se pudo cargar .env: %w", err)
+	}
 
+	return &Config{
+		DBUser:     os.Getenv("DB_USER"),
+		DBPassword: os.Getenv("DB_PASSWORD"),
+		DBHost:     os.Getenv("DB_HOST"),
+		DBPort:     os.Getenv("DB_PORT"),
+		DBName:     os.Getenv("DB_NAME"),
+		JWTSecret:  os.Getenv("JWT_SECRET"),
+		Port:       getPort(),
+	}, nil
+
+	
+}
 // getPort returns the server port, defaulting to :8080 if not set
 func getPort() string {
 	port := os.Getenv("PORT")

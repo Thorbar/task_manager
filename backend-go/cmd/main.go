@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -20,6 +21,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("%s: %v", i18n.T("error.config.load"), err)
 	}
+	fmt.Printf("Conectando a la BBDD en %s:%s como %s\n", cfg.DBHost, cfg.DBPort, cfg.DBUser)
+
 
 	// Connect to MySQL database
 	if err := db.ConnectDB(cfg); err != nil {
@@ -46,6 +49,13 @@ func main() {
 	mux.HandleFunc("/api/tasks/", auth.AuthMiddleware(task.TasksRouter))
 	mux.HandleFunc("/api/user/", auth.AuthMiddleware(user.UserRouter))
 
+	//safeCheck for docker connection
+	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"status":"ok"}`))
+	})
+
+
 	// Apply CORS policy
 	handler := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:5173"},
@@ -55,5 +65,7 @@ func main() {
 	}).Handler(mux)
 
 	log.Printf("%s http://localhost%s", i18n.T("server.start"), cfg.Port)
-	log.Fatal(http.ListenAndServe(cfg.Port, handler))
+	//log.Fatal(http.ListenAndServe(cfg.Port, handler)) used for localhost with apache
+	log.Fatal(http.ListenAndServe("0.0.0.0"+cfg.Port, handler))
+
 }

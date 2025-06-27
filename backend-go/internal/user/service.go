@@ -22,19 +22,31 @@ func NewService(db *sql.DB) *Service {
 // RegisterUser handles user registration logic.
 // It hashes the password and inserts the user into the database.
 func (s *Service) RegisterUser(ctx context.Context, req *models.RegisterRequest) error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
+    // Primero verifica si username o email ya existen:
+    var exists bool
+    queryCheck := `SELECT EXISTS(SELECT 1 FROM users WHERE username = ? OR email = ?)`
+    err := s.DB.QueryRowContext(ctx, queryCheck, req.Username, req.Email).Scan(&exists)
+    if err != nil {
+        return err
+    }
+    if exists {
+        return errors.New("user_or_email_exists")
+    }
 
-	query := `INSERT INTO users (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)`
-	_, err = s.DB.ExecContext(ctx, query, req.Name, req.Surname, req.Username, req.Email, hashedPassword)
-	if err != nil {
-		return err
-	}
+    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+    if err != nil {
+        return err
+    }
 
-	return nil
+    query := `INSERT INTO users (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)`
+    _, err = s.DB.ExecContext(ctx, query, req.Name, req.Surname, req.Username, req.Email, hashedPassword)
+    if err != nil {
+        return err
+    }
+
+    return nil
 }
+
 
 // LoginUser verifies user credentials and returns a JWT token upon success.
 func (s *Service) LoginUser(ctx context.Context, req *models.LoginRequest) (string, error) {

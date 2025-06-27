@@ -33,18 +33,19 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := strings.TrimPrefix(authHeader, "Bearer ")
-	username, err := auth.ParseToken(token)
+	userID, err := auth.ParseToken(token)
 	if err != nil {
 		respondWithError(w, http.StatusUnauthorized, "auth.error.invalid_token")
 		return
 	}
 
-	err = db.DB.QueryRow("SELECT username, email, name, surname, created_at FROM users WHERE username = ?", username).
+	err = db.DB.QueryRow("SELECT username, email, name, surname, created_at FROM users WHERE id = ?", userID).
 		Scan(&user.Username, &user.Email, &user.Name, &user.Surname, &user.Created)
 	if err != nil {
 		respondWithError(w, http.StatusNotFound, "user.error.not_found")
 		return
 	}
+
 
 	respondWithJSON(w, http.StatusOK, user)
 }

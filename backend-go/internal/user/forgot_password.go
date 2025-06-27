@@ -27,6 +27,7 @@ var (
 
 func init() {
 	// Load environment variables depending on the app environment
+	/*
 	env := os.Getenv("APP_ENV") // "development" or "production"
 
 	envFile := ".env.development"
@@ -38,6 +39,11 @@ func init() {
 	if err != nil {
 		log.Printf("Could not load env file %s: %v", envFile, err)
 	}
+*/
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Could not load env file %s: ", err)
+	}
 
 	from = os.Getenv("GOOGLE_EMAIL")
 	password = os.Getenv("GOOGLE_PWD")
@@ -45,7 +51,7 @@ func init() {
 	port = os.Getenv("PUBLIC_API_PORT")
 
 	if from == "" || password == "" || url == "" {
-		log.Fatal("Missing mandatory environment variables: GOOGLE_EMAIL, GOOGLE_PWD, PUBLIC_API_URL")
+		log.Printf("Missing mandatory environment variables: GOOGLE_EMAIL, GOOGLE_PWD, PUBLIC_API_URL")
 	}
 }
 
@@ -137,16 +143,6 @@ func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Store token associated with the user (using username as ID here)
-	_, err = db.DB.Exec("UPDATE users SET password_reset_token = ? WHERE username = ?", token, user.Username)
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{
-			"error": i18n.T("error_email_not_registered"),
-		})
-		return
-	}
 
 	if err := sendResetEmail(user.Email, token); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

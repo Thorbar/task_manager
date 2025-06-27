@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"task-manager/backend-go/db"
@@ -42,6 +43,7 @@ func isValidPassword(password string) bool {
  registers the user, and returns appropriate responses.
 */
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("1 register")
 	if r.Method != http.MethodPost {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -73,16 +75,19 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if err := service.RegisterUser(context.Background(), &req); err != nil {
 		log.Println("User registration error:", err)
 		w.Header().Set("Content-Type", "application/json")
+
+		if err.Error() == "user_or_email_exists" {
+			w.WriteHeader(http.StatusConflict)
+			json.NewEncoder(w).Encode(map[string]string{
+				"error": i18n.T("user_already_exists"),
+			})
+			return
+		}
+
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{
-			"error": i18n.T("user_already_exists"),
+			"error": i18n.T("register_failed"),
 		})
 		return
 	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(map[string]string{
-		"message": i18n.T("user_registered"),
-	})
 }
